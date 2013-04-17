@@ -6,7 +6,6 @@ import job_finder.entities.job.Job;
 import org.junit.Test;
 
 import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsNull.nullValue;
 import static org.junit.Assert.assertThat;
 
 public class JobApplicationBuilderTest {
@@ -31,7 +30,7 @@ public class JobApplicationBuilderTest {
 
         JobApplication actual = underTest.buildJobApplication(jobNotValidForAnyJobSeeker, jobSeeker);
 
-        assertThat(actual, is(nullValue()));
+        assertThat(actual.isInvalid(), is(true));
     }
 
     private class JobValidForAnyJobSeeker extends Job {

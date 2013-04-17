@@ -75,7 +75,7 @@ public class JobApplicationRepositoryTest {
     @Test
     public void jobSeekerCannotApplyToJReqJobWithoutAResume() {
         JobSeeker jobSeekerWithoutResume = new JobSeekerWithoutResume();
-        JobApplication jobApplication = jobApplicationBuilder.buildJobApplication(new JReqJob(), jobSeekerWithoutResume);
+        JobApplication jobApplication = jobApplicationBuilder.buildJobApplication(new JReqJob(new JobTitle("")), jobSeekerWithoutResume);
         underTest.saveNewApplicationFor(jobApplication);
 
         JobApplications actual = underTest.findByJobSeeker(jobSeekerWithoutResume);

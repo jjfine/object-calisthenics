@@ -16,8 +16,7 @@ public class JobApplicationRepository {
     JobApplications applications = new JobApplications();
 
     public void saveNewApplicationFor(JobApplication jobApplication) {
-        if (jobApplication == null) return;
-        applications.add(jobApplication);
+        if (!jobApplication.isInvalid()) applications.add(jobApplication);
     }
 
     public JobApplications findByJobApplicationCriteria(Criteria<JobApplication> criteria) {
