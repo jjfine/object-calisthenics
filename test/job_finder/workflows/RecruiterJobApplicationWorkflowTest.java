@@ -75,4 +75,17 @@ public class RecruiterJobApplicationWorkflowTest {
         assertThat(writer.toString(), containsString("- Bobby applied to Chef Garde Manager on " + dateString));
         assertThat(writer.toString(), not(containsString("Dishwasher")));
     }
+
+    @Test
+    public void canViewAListOfThisRecruitersJobsAppliedToAJobOnACertainDate() throws IOException {
+        LocalDate today = new LocalDate();
+        StringWriter writer = new StringWriter();
+        underTest.showApplicantsToJobOnDate(jobWithTwoApplicants, today, writer);
+
+        String dateString = new LocalDate().toString();
+        assertThat(writer.toString(), containsString("- Ina applied to Saucier on " + dateString));
+        assertThat(writer.toString(), containsString("- Bobby applied to Saucier on " + dateString));
+        assertThat(writer.toString(), not(containsString("Dishwasher")));
+        assertThat(writer.toString(), not(containsString("Chef Garde Manager")));
+    }
 }

@@ -30,4 +30,9 @@ public class RecruiterJobApplicationWorkflow {
         JobApplications jobApplications = jobApplicationRepository.findByDateAndRecruiter(date, recruiter);
         new JobApplicationsAppender().write(jobApplications, writer);
     }
+
+    public void showApplicantsToJobOnDate(Job job, LocalDate today, StringWriter writer) throws IOException {
+        JobApplications jobApplications = jobApplicationRepository.findByJobAndDate(job, today);
+        new JobApplicationsAppender().write(jobApplications, writer);
+    }
 }

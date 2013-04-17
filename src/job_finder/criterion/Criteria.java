@@ -15,7 +15,8 @@ public class Criteria<T> {
         return true;
     }
 
-    public void add(Criterion<T> criterion) {
+    public Criteria<T> add(Criterion<T> criterion) {
         criteria.add(criterion);
+        return this;
     }
 }
