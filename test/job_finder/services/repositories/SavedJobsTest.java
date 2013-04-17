@@ -1,8 +1,8 @@
 package job_finder.services.repositories;
 
 import job_finder.entities.JobSeeker;
-import job_finder.entities.job.AtsJob;
 import job_finder.entities.job.Job;
+import job_finder.entities.job.ats.AtsJob;
 import job_finder.value_objects.JobTitle;
 import org.junit.Test;
 

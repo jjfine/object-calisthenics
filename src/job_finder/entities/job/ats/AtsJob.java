@@ -1,11 +1,11 @@
-package job_finder.entities.job;
+package job_finder.entities.job.ats;
 
 import job_finder.entities.JobSeeker;
 import job_finder.entities.Recruiter;
+import job_finder.entities.job.Job;
 import job_finder.value_objects.JobTitle;
 
 public class AtsJob extends Job {
-    public AtsJob() { super(); }
 
     public AtsJob(JobTitle title) {
         super(title);

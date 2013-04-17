@@ -1,9 +1,9 @@
 package job_finder.workflows;
 
 import job_finder.entities.Recruiter;
-import job_finder.entities.job.AtsJob;
 import job_finder.entities.job.Jobs;
 import job_finder.entities.job.JobsAppender;
+import job_finder.entities.job.ats.AtsJob;
 import job_finder.services.repositories.JobRepository;
 import job_finder.value_objects.JobTitle;
 
