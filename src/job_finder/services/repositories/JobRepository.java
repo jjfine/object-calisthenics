@@ -16,7 +16,7 @@ public class JobRepository {
     }
 
     public Jobs findJobsByRecruiter(Recruiter recruiter) {
-        return findByCriteria(new Criteria<Job>(new RecruiterJobCriterion(recruiter)));
+        return findByCriteria(new Criteria<Job>().add(new RecruiterJobCriterion(recruiter)));
     }
 
     public void post(Job job) {

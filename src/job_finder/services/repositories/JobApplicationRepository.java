@@ -26,23 +26,23 @@ public class JobApplicationRepository {
     }
 
     public JobApplications findByJobSeeker(JobSeeker jobSeeker) {
-        Criteria<JobApplication> criteria = new Criteria<JobApplication>(new JobSeekerCriterion(jobSeeker));
+        Criteria<JobApplication> criteria = new Criteria<JobApplication>().add(new JobSeekerCriterion(jobSeeker));
         return findByJobApplicationCriteria(criteria);
     }
 
     public JobApplications findByJob(Job job) {
-        Criteria<JobApplication> criteria = new Criteria<JobApplication>(new JobCriterion(job));
+        Criteria<JobApplication> criteria = new Criteria<JobApplication>().add(new JobCriterion(job));
         return findByJobApplicationCriteria(criteria);
     }
 
     public JobApplications findByDateAndRecruiter(LocalDate date, Recruiter recruiter) {
-        Criteria<JobApplication> criteria = new Criteria<JobApplication>(new ApplicationDateCriterion(date));
+        Criteria<JobApplication> criteria = new Criteria<JobApplication>().add(new ApplicationDateCriterion(date));
         criteria.add(new RecruiterJobApplicationCriterion(recruiter));
         return findByJobApplicationCriteria(criteria);
     }
 
     public JobApplications findByJobAndDate(Job job, LocalDate date) {
-        Criteria<JobApplication> criteria = new Criteria<JobApplication>(new ApplicationDateCriterion(date)).add(new JobCriterion(job));
+        Criteria<JobApplication> criteria = new Criteria<JobApplication>().add(new ApplicationDateCriterion(date)).add(new JobCriterion(job));
         return findByJobApplicationCriteria(criteria);
     }
 }

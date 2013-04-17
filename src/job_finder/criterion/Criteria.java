@@ -6,9 +6,7 @@ import java.util.List;
 public class Criteria<T> {
     List<Criterion<T>> criteria = new ArrayList<Criterion<T>>();
 
-    public Criteria(Criterion<T> criterion) {
-        criteria.add(criterion);
-    }
+    public Criteria() {}
 
     public boolean isSatisfiedBy(T t) {
         for (Criterion<T> criterion : criteria) if (!criterion.isSatisfiedBy(t)) return false;
