@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="guava-14.0.1">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/guava-14.0.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/hamcrest-core-1.3.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/lib/joda-time-2.2-dist.zip!/joda-time-2.2/src/main/java" />
+      <root url="jar://$PROJECT_DIR$/lib/joda-time-2.2-dist.zip!/joda-time-2.2/src/test/java" />
+      <root url="jar://$PROJECT_DIR$/lib/joda-time-2.2-dist.zip!/joda-time-2.2/src/example" />
+    </SOURCES>
+  </library>
+</component>
