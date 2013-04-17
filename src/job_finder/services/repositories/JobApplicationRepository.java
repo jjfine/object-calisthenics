@@ -49,4 +49,9 @@ public class JobApplicationRepository {
         Criteria<JobApplication> criteria = new Criteria<JobApplication>().add(new ApplicationDateCriterion(date));
         return findByJobApplicationCriteria(criteria);
     }
+
+    public JobApplications findByRecruiter(Recruiter recruiter) {
+        Criteria<JobApplication> criteria = new Criteria<JobApplication>().add(new RecruiterJobApplicationCriterion(recruiter));
+        return findByJobApplicationCriteria(criteria);
+    }
 }

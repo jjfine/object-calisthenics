@@ -24,25 +24,27 @@ public class TheLaddersApplicationWorkflowTest {
     private Job jobWithTwoApplicants;
     private JobSeeker jobSeekerWithTwoApplications;
     private JobApplicationBuilder jobApplicationBuilder;
-    private Recruiter recruiter = new Recruiter();
+    private Recruiter recruiterWithThreeApplications = new Recruiter(new Name("Three"));
     private JobApplicationRepository jobApplicationRepository;
-    private Job jobPostedBySomeoneElse;
+    private Job jobWithOneApplicant;
+    private Recruiter recruiterWithOneApplication;
 
     @Before
     public void setup() {
         jobApplicationRepository = new JobApplicationRepository();
         underTest = new TheLaddersApplicationWorkflow(jobApplicationRepository);
 
-        jobWithTwoApplicants = new AtsJob(new JobTitle("Saucier"), recruiter);
+        jobWithTwoApplicants = new AtsJob(new JobTitle("Saucier"), recruiterWithThreeApplications);
         jobSeekerWithTwoApplications = new JobSeeker(new Name("Bobby"));
         jobApplicationBuilder = new JobApplicationBuilder();
 
         jobApplicationRepository.saveNewApplicationFor(jobApplicationBuilder.buildJobApplication(jobWithTwoApplicants, jobSeekerWithTwoApplications));
-        jobApplicationRepository.saveNewApplicationFor(jobApplicationBuilder.buildJobApplication(new AtsJob(new JobTitle("Chef Garde Manager"), recruiter), jobSeekerWithTwoApplications));
+        jobApplicationRepository.saveNewApplicationFor(jobApplicationBuilder.buildJobApplication(new AtsJob(new JobTitle("Chef Garde Manager"), recruiterWithThreeApplications), jobSeekerWithTwoApplications));
         jobApplicationRepository.saveNewApplicationFor(jobApplicationBuilder.buildJobApplication(jobWithTwoApplicants, new JobSeeker(new Name("Ina"))));
 
-        jobPostedBySomeoneElse = new AtsJob(new JobTitle("Dishwasher"), new Recruiter());
-        jobApplicationRepository.saveNewApplicationFor(jobApplicationBuilder.buildJobApplication(jobPostedBySomeoneElse, new JobSeeker(new Name("Mario"))));
+        recruiterWithOneApplication = new Recruiter(new Name("One"));
+        jobWithOneApplicant = new AtsJob(new JobTitle("Dishwasher"), recruiterWithOneApplication);
+        jobApplicationRepository.saveNewApplicationFor(jobApplicationBuilder.buildJobApplication(jobWithOneApplicant, new JobSeeker(new Name("Mario"))));
 
     }
 
@@ -57,5 +59,56 @@ public class TheLaddersApplicationWorkflowTest {
         assertThat(writer.toString(), containsString("- Bobby applied to Saucier on " + dateString));
         assertThat(writer.toString(), containsString("- Mario applied to Dishwasher on " + dateString));
         assertThat(writer.toString(), containsString("- Bobby applied to Chef Garde Manager on " + dateString));
+    }
+
+
+    @Test
+    public void theLaddersCanViewAggregateJobNumbersByJobAppliedToBy1Person() throws IOException {
+        StringWriter writer = new StringWriter();
+        underTest.showNumberOfApplicationsPostedFor(jobWithOneApplicant, writer);
+
+        assertThat(writer.toString(), containsString("The job titled 'Dishwasher' has been applied to by 1 person."));
+    }
+
+    @Test
+    public void theLaddersCanViewAggregateJobNumbersByJobAppliedToBy2People() throws IOException {
+        StringWriter writer = new StringWriter();
+        underTest.showNumberOfApplicationsPostedFor(jobWithTwoApplicants, writer);
+
+        assertThat(writer.toString(), containsString("The job titled 'Saucier' has been applied to by 2 people."));
+    }
+
+
+    @Test
+    public void theLaddersCanViewAggregateJobNumbersByJobAppliedToByNobody() throws IOException {
+        StringWriter writer = new StringWriter();
+        underTest.showNumberOfApplicationsPostedFor(new AtsJob(new JobTitle("Food Taster")), writer);
+
+        assertThat(writer.toString(), containsString("The job titled 'Food Taster' has not been applied to by anyone."));
+    }
+
+    @Test
+    public void theLaddersCanViewAggregateJobNumbersByRecruiterAppliedToBy1Person() throws IOException {
+        StringWriter writer = new StringWriter();
+        underTest.showNumberOfApplicationsByRecruiter(recruiterWithOneApplication, writer);
+
+        assertThat(writer.toString(), containsString("The recruiter named 'One' has 1 application."));
+    }
+
+    @Test
+    public void theLaddersCanViewAggregateJobNumbersByRecruiterAppliedToBy3People() throws IOException {
+        StringWriter writer = new StringWriter();
+        underTest.showNumberOfApplicationsByRecruiter(recruiterWithThreeApplications, writer);
+
+        assertThat(writer.toString(), containsString("The recruiter named 'Three' has 3 applications."));
+    }
+
+
+    @Test
+    public void theLaddersCanViewAggregateJobNumbersByRecruiterAppliedToByNobody() throws IOException {
+        StringWriter writer = new StringWriter();
+        underTest.showNumberOfApplicationsByRecruiter(new Recruiter(new Name("None")), writer);
+
+        assertThat(writer.toString(), containsString("The recruiter named 'None' has no applications."));
     }
 }
