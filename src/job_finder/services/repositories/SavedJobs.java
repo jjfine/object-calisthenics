@@ -26,6 +26,7 @@ public class SavedJobs {
 
     public void writeJobsSavedBy(JobSeeker jobSeeker, Writer writer) throws IOException {
         Jobs jobs = findByJobSeeker(jobSeeker);
+        if (jobs == null) jobs = new Jobs();
         new JobsAppender().appendJobListToWriter(jobs, writer);
     }
 }

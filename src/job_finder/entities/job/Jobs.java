@@ -15,4 +15,8 @@ public class Jobs implements Iterable<Job> {
     public Iterator<Job> iterator() {
         return jobs.iterator();
     }
+
+    public Boolean isEmpty() {
+        return jobs.isEmpty();
+    }
 }
