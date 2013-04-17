@@ -15,7 +15,6 @@ public class AtsJob extends Job {
         super(jobTitle, recruiter);
     }
 
-
     @Override
     public Boolean canBeAppliedToBy(JobSeeker jobSeeker) {
         return true;

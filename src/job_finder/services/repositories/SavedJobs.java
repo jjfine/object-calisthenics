@@ -3,10 +3,7 @@ package job_finder.services.repositories;
 import job_finder.entities.JobSeeker;
 import job_finder.entities.job.Job;
 import job_finder.entities.job.Jobs;
-import job_finder.entities.job.JobsAppender;
 
-import java.io.IOException;
-import java.io.Writer;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,12 +18,8 @@ public class SavedJobs {
     }
 
     public Jobs findByJobSeeker(JobSeeker jobSeeker) {
-        return jobsByJobSeeker.get(jobSeeker);
-    }
-
-    public void writeJobsSavedBy(JobSeeker jobSeeker, Writer writer) throws IOException {
-        Jobs jobs = findByJobSeeker(jobSeeker);
-        if (jobs == null) jobs = new Jobs();
-        new JobsAppender().appendJobListToWriter(jobs, writer);
+        Jobs jobs = jobsByJobSeeker.get(jobSeeker);
+        if (jobs == null) return new Jobs();
+        return jobs;
     }
 }

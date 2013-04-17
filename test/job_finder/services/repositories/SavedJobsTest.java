@@ -2,28 +2,40 @@ package job_finder.services.repositories;
 
 import job_finder.entities.JobSeeker;
 import job_finder.entities.job.Job;
+import job_finder.entities.job.Jobs;
 import job_finder.entities.job.ats.AtsJob;
 import job_finder.value_objects.JobTitle;
+import org.junit.Before;
 import org.junit.Test;
-
-import java.io.IOException;
-import java.io.StringWriter;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
+import static org.junit.internal.matchers.IsCollectionContaining.hasItem;
 
 public class SavedJobsTest {
+
+    private JobSeeker jobSeeker;
+    private SavedJobs savedJobs;
+
+    @Before
+    public void setUp() {
+        jobSeeker = new JobSeeker();
+        savedJobs = new SavedJobs();
+    }
+
     @Test
-    public void jobSeekerCanSeeAListOfSavedJobs() throws IOException {
-        JobSeeker jobSeeker = new JobSeeker();
+    public void returnsAListOfSavedJobs() {
         Job job = new AtsJob(new JobTitle("Candy Taster"));
-        SavedJobs savedJobs = new SavedJobs();
         savedJobs.add(jobSeeker, job);
 
-        StringWriter writer = new StringWriter();
+        Jobs jobs = savedJobs.findByJobSeeker(jobSeeker);
 
-        savedJobs.writeJobsSavedBy(jobSeeker, writer);
+        assertThat(jobs, hasItem(job));
+    }
 
-        assertThat(writer.toString(), is("- Candy Taster\n"));
+    @Test
+    public void returnsEmptyListIfNoSavedJobs() {
+        Jobs actual = savedJobs.findByJobSeeker(jobSeeker);
+        assertThat(actual.isEmpty(), is(true));
     }
 }

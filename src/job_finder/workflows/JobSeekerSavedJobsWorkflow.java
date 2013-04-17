@@ -2,6 +2,8 @@ package job_finder.workflows;
 
 import job_finder.entities.JobSeeker;
 import job_finder.entities.job.Job;
+import job_finder.entities.job.Jobs;
+import job_finder.entities.job.JobsAppender;
 import job_finder.services.repositories.SavedJobs;
 
 import java.io.IOException;
@@ -21,6 +23,7 @@ public class JobSeekerSavedJobsWorkflow {
     }
 
     public void showSavedJobs(StringWriter writer) throws IOException {
-        savedJobs.writeJobsSavedBy(jobSeeker, writer);
+        Jobs jobs = savedJobs.findByJobSeeker(jobSeeker);
+        new JobsAppender().appendJobListToWriter(jobs, writer);
     }
 }
