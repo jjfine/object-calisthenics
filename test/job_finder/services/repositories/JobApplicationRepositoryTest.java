@@ -15,7 +15,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.io.StringWriter;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -53,14 +52,6 @@ public class JobApplicationRepositoryTest {
 
         assertThat(actual.size(), is(2));
         assertThat(actual, hasItem(expected));
-    }
-
-    @Test
-    public void canShowJobsAJobSeekerAppliedTo() throws IOException {
-        StringWriter writer = new StringWriter();
-        underTest.showJobsByJobSeeker(jobSeekerWithTwoApplications, writer);
-
-        assertThat(writer.toString(), is("- Saucier\n- Chef Garde Manager\n"));
     }
 
     @Test

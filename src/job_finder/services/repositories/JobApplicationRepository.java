@@ -12,9 +12,6 @@ import job_finder.entities.application.criteria.RecruiterJobApplicationCriterion
 import job_finder.entities.job.Job;
 import org.joda.time.LocalDate;
 
-import java.io.IOException;
-import java.io.Writer;
-
 public class JobApplicationRepository {
     JobApplications applications = new JobApplications();
 
@@ -29,14 +26,9 @@ public class JobApplicationRepository {
         return jobApplications;
     }
 
-    JobApplications findByJobSeeker(JobSeeker jobSeeker) {
+    public JobApplications findByJobSeeker(JobSeeker jobSeeker) {
         Criteria<JobApplication> criteria = new Criteria<JobApplication>(new JobSeekerCriterion(jobSeeker));
         return findByJobApplicationCriteria(criteria);
-    }
-
-    public void showJobsByJobSeeker(JobSeeker jobSeeker, Writer writer) throws IOException {
-        JobApplications jobApplications = findByJobSeeker(jobSeeker);
-        jobApplications.appendWriterWithListOfJobTitles(writer);
     }
 
     public JobApplications findByJob(Job job) {
