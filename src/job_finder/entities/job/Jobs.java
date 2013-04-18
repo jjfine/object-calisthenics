@@ -1,10 +1,12 @@
 package job_finder.entities.job;
 
+import job_finder.criterion.IterableAddable;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class Jobs implements Iterable<Job> {
+public class Jobs implements IterableAddable<Job> {
     List<Job> jobs = new ArrayList<Job>();
 
     public void add(Job job) {

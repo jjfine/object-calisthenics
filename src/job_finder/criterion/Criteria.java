@@ -17,4 +17,14 @@ public class Criteria<T> {
         criteria.add(criterion);
         return this;
     }
+
+    public <L extends IterableAddable<T>> L list(Class<L> clazz, L list) {
+        L elementsSatisfyingCriteria;
+        try { elementsSatisfyingCriteria = clazz.newInstance(); }
+        catch (InstantiationException e) { throw new ExceptionInInitializerError(); }
+        catch (IllegalAccessException e) { throw new ExceptionInInitializerError();  }
+
+        for (T t : list) if (isSatisfiedBy(t)) elementsSatisfyingCriteria.add(t);
+        return elementsSatisfyingCriteria;
+    }
 }

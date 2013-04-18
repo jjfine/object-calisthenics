@@ -9,14 +9,8 @@ import job_finder.entities.job.criteria.RecruiterJobCriterion;
 public class JobRepository {
     Jobs jobs = new Jobs();
 
-    public Jobs findByCriteria(Criteria<Job> criteria) {
-        Jobs jobsSatisfyingCriteria = new Jobs();
-        for (Job job : jobs) if (criteria.isSatisfiedBy(job)) jobsSatisfyingCriteria.add(job);
-        return jobsSatisfyingCriteria;
-    }
-
     public Jobs findJobsByRecruiter(Recruiter recruiter) {
-        return findByCriteria(new Criteria<Job>().add(new RecruiterJobCriterion(recruiter)));
+        return new Criteria<Job>().add(new RecruiterJobCriterion(recruiter)).list(Jobs.class, jobs);
     }
 
     public void post(Job job) {

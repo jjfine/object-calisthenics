@@ -1,12 +1,14 @@
 package job_finder.entities.application;
 
+import job_finder.criterion.IterableAddable;
+
 import java.io.IOException;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class JobApplications implements Iterable<JobApplication> {
+public class JobApplications implements IterableAddable<JobApplication> {
     List<JobApplication> applications = new ArrayList<JobApplication>();
 
     public void add(JobApplication jobApplication) {

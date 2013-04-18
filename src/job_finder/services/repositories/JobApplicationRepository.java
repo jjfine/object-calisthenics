@@ -19,39 +19,33 @@ public class JobApplicationRepository {
         if (!jobApplication.isInvalid()) applications.add(jobApplication);
     }
 
-    public JobApplications findByJobApplicationCriteria(Criteria<JobApplication> criteria) {
-        JobApplications jobApplications = new JobApplications();
-        for (JobApplication application : applications) if (criteria.isSatisfiedBy(application)) jobApplications.add(application);
-        return jobApplications;
-    }
-
     public JobApplications findByJobSeeker(JobSeeker jobSeeker) {
         Criteria<JobApplication> criteria = new Criteria<JobApplication>().add(new JobSeekerCriterion(jobSeeker));
-        return findByJobApplicationCriteria(criteria);
+        return criteria.list(JobApplications.class, applications);
     }
 
     public JobApplications findByJob(Job job) {
         Criteria<JobApplication> criteria = new Criteria<JobApplication>().add(new JobCriterion(job));
-        return findByJobApplicationCriteria(criteria);
+        return criteria.list(JobApplications.class, applications);
     }
 
     public JobApplications findByDateAndRecruiter(LocalDate date, Recruiter recruiter) {
         Criteria<JobApplication> criteria = new Criteria<JobApplication>().add(new ApplicationDateCriterion(date)).add(new RecruiterJobApplicationCriterion(recruiter));
-        return findByJobApplicationCriteria(criteria);
+        return criteria.list(JobApplications.class, applications);
     }
 
     public JobApplications findByJobAndDate(Job job, LocalDate date) {
         Criteria<JobApplication> criteria = new Criteria<JobApplication>().add(new ApplicationDateCriterion(date)).add(new JobCriterion(job));
-        return findByJobApplicationCriteria(criteria);
+        return criteria.list(JobApplications.class, applications);
     }
 
     public JobApplications findAllJobsPostedOn(LocalDate date) {
         Criteria<JobApplication> criteria = new Criteria<JobApplication>().add(new ApplicationDateCriterion(date));
-        return findByJobApplicationCriteria(criteria);
+        return criteria.list(JobApplications.class, applications);
     }
 
     public JobApplications findByRecruiter(Recruiter recruiter) {
         Criteria<JobApplication> criteria = new Criteria<JobApplication>().add(new RecruiterJobApplicationCriterion(recruiter));
-        return findByJobApplicationCriteria(criteria);
+        return criteria.list(JobApplications.class, applications);
     }
 }
